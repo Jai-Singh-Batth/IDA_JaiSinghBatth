@@ -1,0 +1,16 @@
+Elastic Pool Configuration
+
+Joins
+Inner
+Left-all left, matching right
+Right
+Self
+Outer
+Cross
+
+Stored Procedure
+Views
+Functions =>Scalar
+          =>Table Valued
+Test Table (#tablename)
+works only for current session
