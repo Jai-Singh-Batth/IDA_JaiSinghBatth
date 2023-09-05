@@ -1,0 +1,26 @@
+Creating Azure Storage account
+Zones: LRS,GRS,ZRS,GZRS
+	LRS:3x copies for redundancies	in same zone
+	region pair:another server >=300 miles
+	ZRS: copies in 3 different zones
+	GRS: local redundant in primary and secondary regions
+	GZRS: primary has 3 zones and secondary has just one zone
+	RAGRS/RAGZRS:read access in secondary region of GRS/GZRS
+	SLA:service level agreement
+BLOB:binary large object:image csv structured unstructured
+SFTP->blob
+Access Tiers
+hot
+cool 30 days
+cold 90 days
+archive
+gen2
+azure cost calculator
+ingress-pushing data into azure
+egress-downloading data from azure(costlier)
+
+static website in container
+
+
+
+	
