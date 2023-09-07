@@ -1,0 +1,24 @@
+difference between parameter and variable
+intoduction to the various types of activities
+copy data
+data flow
+append variable
+delete
+execute pipeline
+execute ssis package fail
+get metadata
+lookup
+set variables
+validation 
+web 
+web hooks
+wait
+iteration and condition
+-intro to system variables
+various state of activities
+Triggers
+Schedule trigger: A trigger that invokes a pipeline on a wall-clock schedule.
+Tumbling window trigger: A trigger that operates on a periodic interval, while also retaining state.
+Event-based trigger: A trigger that responds to an event.
+wildcard can be setup to allow triggers for particular files
+no of activities permitted in a pipeline 40
