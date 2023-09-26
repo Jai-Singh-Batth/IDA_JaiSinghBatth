@@ -1,0 +1,6 @@
+azure synapse analytics:combination of
+	ADF
+	spark nb
+	sql dw
+
+

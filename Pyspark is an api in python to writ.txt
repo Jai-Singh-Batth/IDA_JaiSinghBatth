@@ -1,0 +1,16 @@
+Pyspark is an api in python to write codes in spark engine.
+driver and executers(have slots)
+jvm:java vm
+spark
+	python
+	SCALAR
+	R
+	SQL
+spark breaks up data into chucks- to perform work in parallel
+lazy evaluation:transformation that only occurs when called
+number of jobs:number of actions
+each job can have one or more stages
+number of stages:number of shuffling
+each stage can have more than one tasks
+PySpark Deployment
+databricks:cluster mode

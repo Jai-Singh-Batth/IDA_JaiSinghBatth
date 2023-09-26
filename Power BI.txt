@@ -1,0 +1,18 @@
+Power BI
+Data Visualization
+PBI Desktop-development
+PBI Services-publishing
+PBI Mobile-see the report
+data engineer
+data scientist
+data analyst
+.pbix file
+power query editor for data transformation
+everythung is going to be a string in csv file
+DAX measures
+dax calculated columns
+filter(visual,page,all page)
+slicer
+RLS(manage roles)
+beautification
+parameters
