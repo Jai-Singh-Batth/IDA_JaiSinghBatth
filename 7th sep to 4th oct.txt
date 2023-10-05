@@ -1,0 +1,1076 @@
+7th sep to 4th oct
+
+PIPELINE AND ACTIVITIES
+ForEach Activity
+
+
+Control Flow vs Data Flow
+Data flow
+	Spark is used for transformations
+	Databricks uses Spark engine in the backend for data transformations
+
+*Azure Data Factory Studio
+
+
+Task
+	Requirement
+o	Create 2 storage accounts: 1 Blob Storage, 1 ADLS Gen2
+o	Create a Data Factory
+o	Use Data Flow activity to carry out transformations for the csv files present
+	Greater(tointeger(Amount), 1000)
+	Read about ADF expressions
+ 
+ 
+ 
+
+ 
+
+Derived filters
+**explore transformations 
+Surrogate key
+	Substitute
+	To make a column unique
+	Example: if the same order is placed in the same day
+	The surrogate keys are always unique
+Conditional split vs filter
+
+Task
+	Create a new pipeline
+	Use ForEach activity to read the file names
+
+API
+	Use Web Activity
+	Create new LS for HTTP 
+     
+
+
+CDC (change data capture)
+	CDC takes care of the following things
+o	Inserts
+o	Updates
+o	Deletes
+
+Azure Resource Manager Template (ARM Template)
+	It maintains a record of all the services used and published on Azure
+	It is used to recover and go back to the same state if all the resources from the portal is removed
+
+
+
+8th sep
+
+
+Full Load
+Incremental Load
+CDC
+Schema Drift
+	Allow schema drift
+o	Keeps track of changes in the number of columns
+	Infer drifted column types
+o	Keeps track of changes in the data type of the columns
+
+Azure Run Book
+	Set of instructions to carry out some executions
+	Example: Azure Automation Runbook
+	To create an automation account
+o	Search for Automation Accounts service
+o	Create an automation account
+
+ 
+
+
+	Multiple scripting shells are present to write the code for automations
+	These shells can be
+o	PowerShell
+o	Graphical PowerShell
+o	Unix Shell
+	Wherever possible, try to write comments. It is a convention to make the code more readable
+	Instead of writing code, drag and drop options available with some shells that allow easier automation
+	Multiple services are present inside the automation account to provide specific automation support for different Azure resources
+	Creation of a Runbook in Automation account
+ 
+
+	Difference between sequence and pipeline
+o	Pipeline keeps giving continuous outputs whereas pipeline gives outputs only upon completion
+ 
+
+
+Azure Monitor
+	To monitor every other Azure Service
+	Monitor -> metrics, select scope, then check the metrics
+
+ 
+
+	Alert option can be used in Monitor service to generate alerts when a certain level of resources are utilized
+	
+
+
+ 
+12th sep
+
+Synapse Analytics
+It is used for
+	Process data
+	Create own pipeline
+	Tools present in Synapse Analytics
+o	ADF
+o	Spark Notebook
+o	SQL DB
+	Managed Resource Group
+o	Additional resource group sits in this
+o	Not mandatory
+o	It’s recommended to create one as some naming convention need to be followed
+o	If no value provided, a default one is created by Synapse
+	Create a new Synapse account
+o	contributor
+o	Account name – give a new account
+o	File system name – input
+o	Authentication method: use both local and azure active directory
+o	No changes in networking
+o	Synapse is very costly.
+
+ 
+
+	Open Synapse Studio
+o	Develop option: create notebooks that support spark, sql
+o	Monitoring: monitor pipelines
+*** Synapse does not support Blob Storage Account
+	Pool
+o	Serverless
+	Per TB of data the costing is done
+	To avail this service, a cost needs to be paid
+o	Dedicated pool
+	Very costly
+	Provides additional functionalities 
+	It allows creation of tables, and other resources which are not present in serverless
+o	Spark Pool
+	Costly
+	For Big Data mgmt.
+o	SQL Pool
+	For relational data in lesser volume
+o	Difference between serverless and dedicated pool
+	table supported
+	partition 
+	external tables
+	table index
+	table distribution
+DIU (Data Integration Unit):
+	A Data Integration Unit (DIU) is a measure that represents the power of a single unit in Azure Data Factory and Synapse pipelines. Power is a combination of CPU, memory, and network resource allocation. 
+DWC (Data Warehousing Capacity) – 100 is the min value
+	SQL query to read  a csv file
+o	Parser_version: defines how the csv file is read. Should always be the latest
+o	Give header = true to convert the first line of the csv file into the column names
+o	Give header_row = true
+o	To carry out fine-grained segregation in Azure DB
+	Use schemas to make segregation
+o	How to create a new database in Synapse
+	Use create database command in workspace
+	Or use UI to create a database
+	Using UI choose the type of database needed.
+	If serverless is chosen then tables option is not seen
+o	To accommodate special characters, UTF-8 encoding is required
+	Create database with UTF-8 enabled.
+	To do the above:
+•	create database idashell collate Latin1_general_100_BIN2_UTF8
+o	SSMS: SQL Server Management Studio
+	It is a user-friendly tool that allows connection to multiple sql servers in different tabs 
+	It is like query editor but more robust and this is where the data engineers mostly work upon and not other IDEs like query editor in Azure SQL DB, or Azure Synapse query script
+	Go to connect
+	Db regime
+	Server name: give the endpoint copied from the synapse home tab
+	Authentication: give user and password
+	Connect
+	Only the users mentioned in the Users tab can access the SQL DB
+	Create login loginname with password pass
+	Create user username from loginname
+	Each application that needs to access this Synapse data needs to have a user named after it
+	The same user isused to get the data from the sql db in synapse
+
+If collation is not used before the database is created and collation is to be made during production then
+	The user altering the db should lock the database for themselves
+	No attempt should be made to alter the db while in production and available to others
+
+
+Common Table Expression (CTE)
+	It is used to carry out data transformation using temporary storage
+	CTE queries can’t be run separately as the storage is temporary
+	Once CTE variable is created, rest of the queries must also run at the same time
+	A separate temp table can’t be used to store the CTE result and run queries separately. as the data is stored in a temp DB. Since temp DBs do not have high storage and storing large volumes will incur more cost
+	It is thus advised to used such temp tables only for small amounts of data otherwise to go with CTE 
+ 
+
+Serverless View Creation
+	Once CTE runs, create a view using ‘create view view_name (CTE)’ command
+	Views are used so that visualization can be done in Power BI
+	Power BI supports a lot of connectors for views
+	To generate a report from Power BI, the serverless should be running 24 hr. This will incur a lot of cost if instead of serverless dedicated is used. Hence, serverless is always used for visualizing the data
+
+
+DEDICATED POOL
+Synapse Analytics
+	It is a one stop shop for storage, SQL, analytics, etc..
+	A lot of resources are present under  the same roof
+	EDW (Enterprise Data Warehousing)
+	Data integration, transformation, analytics all can be done under Synapse Analytics
+	MPP (Massive Parallel Processing)
+	Control and compute node (Master and Worker)
+	Control Node
+o	For managing the compute nodes
+	Compute node:
+o	It is used to carry out data transformations and analytics
+	Storage node
+o	Decoupled node. It is not a part of the compute node
+	Data Movement service
+o	Movement of data from one compute node to another
+o	By default there are 60 compute nodes that run parallelly
+
+
+	Data Distributions
+o	Replication tables
+	It is for small tables
+	For 60 compute nodes, if all the tables are replicated then it will consume a lot of memory
+o	Round Robin
+	It is good for temporary/staging table
+	There are no specific keys for data distribution
+o	Hash Distributed Tables
+	Hash values are created for all the rows
+•	It helps in determining if the data has changed in the table or not
+•	Use a hash function to take the columns and a create a hash value for the table rows
+•	Hash functions can use two columns for example to create a hash value
+•	If there are multiple rows that have the same values for these columns then these records will have the same hash values
+	Data Partitioning
+o	Note: in case of high granularity, a lot of different partitions will be created
+o	To avoid this, choose columns that provide the least number of partitions
+	Indexing
+o	Clustered Columnstore
+	Updateable primary storage
+	Good for read-only
+o	Clustered Index
+	Index is stored in the same order as the data being indexed
+o	Heap
+	Data is not in any particular order
+
+	Apache spark pool
+o	Unlike dedicated pool, the number of worker nodes can be given by the user and is not 60 by default
+o	It also provides a scaling option that allows the user to provide a range of worker nodes for the processing for different loads that is selected automatically
+o	Configure the number of worker nodes as well as the size of them
+o	Python, SQL, Scala, R are the languages supported in Spark Pool Notebook
+	Use Dataframe in Spark
+	The read command for a file in Spark
+	Spark read format option load
+	Any spark db comes under lake database
+
+ 
+
+
+	Dedicated pool
+o	Default distribution type is “Hash Values”
+o	Indexing: clustered
+o	To insert data
+	Copy command
+•	Copy data from the file and load into the table
+•	
+	To load the data
+•	Use the concept of bulk load
+•	Infer schema option allows the conversion of column data types as present in the table
+ 
+
+ 
+13th sep
+
+POWER BI
+
+PBI Desktop
+	For development work
+PBI Service
+	All publishing work
+	Sharing of files
+
+
+PBI Mobile
+	To visualize the same data using mobile phones
+
+
+Sources of data for Power BI
+	A lot of connectors present in Power BI
+	These connectors are used to connect to databases, file systems, etc.
+
+
+Enrich the data
+	Transform the data to clean the data
+	Power Query is used to bring the data to the required state
+	Only when the data is transformed and enriched that we can use it to create reports
+
+Inside Power BI
+	Report: to create reports in a canvas
+	Data:
+	Model: 
+
+.pbix is the format of the Power BI files 
+Dashboard
+	Collection of reports
+Mash-up Query Language
+
+Parameters in Power BI
+	Create parameters for dynamic location of the data source
+
+Manage Columns
+	To choose required columns
+	To remove the unnecessary columns
+
+
+Hands-on on Power BI Transformations
+ 
+
+ 
+
+
+To visualize data based on date
+	Use the hierarchy option
+
+Parameter
+	To dynamically give the path at run time
+	This path is generally given to load files from different file sources
+
+ 
+
+Filters in Power BI
+	Visual filter
+o	Filter on one visual element
+ 
+
+	Page filter
+o	Filter on all the visual elements present in one page
+
+ 
+
+	Report filter
+o	Filter on all the pages and their visual elements for a report
+
+Slicers
+	To slice the data
+	It is a very interactive form of filtering
+
+ 
+
+
+Implicit measure
+	Provided by Power BI
+Explicit measure
+	Made by user
+Languages used in Power BI
+	DAX
+	Mash-up Query Language
+Note:
+•	Calculated columns when used occupy space in the table and consume memory
+•	Measures are similar to calculated columns. Only difference is that they do not occupy any space in the memory
+•	They are just a formula representation that can be used in the report directly without showing up in the table
+
+ 
+
+Row Level Security
+	To hide some and reveal other parts of the report based on different roles
+ 
+14th sep
+POWER BI
+
+PBI Desktop
+	For development work
+PBI Service
+	All publishing work
+	Sharing of files
+
+
+PBI Mobile
+	To visualize the same data using mobile phones
+
+
+Sources of data for Power BI
+	A lot of connectors present in Power BI
+	These connectors are used to connect to databases, file systems, etc.
+
+
+Enrich the data
+	Transform the data to clean the data
+	Power Query is used to bring the data to the required state
+	Only when the data is transformed and enriched that we can use it to create reports
+
+Inside Power BI
+	Report: to create reports in a canvas
+	Data:
+	Model: 
+
+.pbix is the format of the Power BI files 
+Dashboard
+	Collection of reports
+Mash-up Query Language
+
+Parameters in Power BI
+	Create parameters for dynamic location of the data source
+
+Manage Columns
+	To choose required columns
+	To remove the unnecessary columns
+
+
+Hands-on on Power BI Transformations
+ 
+
+ 
+
+
+To visualize data based on date
+	Use the hierarchy option
+
+Parameter
+	To dynamically give the path at run time
+	This path is generally given to load files from different file sources
+
+ 
+
+Filters in Power BI
+	Visual filter
+o	Filter on one visual element
+ 
+
+	Page filter
+o	Filter on all the visual elements present in one page
+
+ 
+
+	Report filter
+o	Filter on all the pages and their visual elements for a report
+
+Slicers
+	To slice the data
+	It is a very interactive form of filtering
+
+ 
+
+
+Implicit measure
+	Provided by Power BI
+Explicit measure
+	Made by user
+Languages used in Power BI
+	DAX
+	Mash-up Query Language
+Note:
+•	Calculated columns when used occupy space in the table and consume memory
+•	Measures are similar to calculated columns. Only difference is that they do not occupy any space in the memory
+•	They are just a formula representation that can be used in the report directly without showing up in the table
+
+ 
+
+Row Level Security
+	To hide some and reveal other parts of the report based on different roles
+ 
+19th sep
+
+Python
+
+	Functions
+	Function Decomposition
+	Generator Function
+	Decorator Function
+	Positional and Keyword Function
+
+Classes in Python
+	Create class using class keyword
+
+20th sep
+Python Libraries
+
+Pandas
+	Panel Datasets
+
+21st sep
+SPARK
+
+How Spark works
+	Driver-Executor architecture
+	Data is split and distributed over the worker nodes
+	A worker node can contain multiple executors
+
+
+Lazy Evaluation
+	Until an action is run, none of the transactions take place
+	This prevents the data from being saved in the Hard Disk again and again which will result in slower processing
+	Spark is much faster than Hive because of Lazy Evaluation
+	The data in Hive is saved in the Hard Disk every time a transformation runs
+
+
+	For every action, one job is created
+
+Transformations and actions
+	Narrow transformation
+o	Separate transformations for every node
+o	There is no exchange of data between the nodes
+	Wide Transformation
+o	There is shuffling of data from one node to another
+o	The nodes exchange data between each other
+o	This results in better processing
+o	Shuffling is a costly process
+
+Jobs, Stages, Tasks
+	as soon as action operations like collect(), count(), etc., is triggered, the driver program, which is responsible for launching the spark application as well as considered the entry point of any spark application, converts this spark application into a single job
+	A job is defined as a series of stages combined.
+	Whenever there is a shuffling of data over the network, Spark divides the job into multiple stages. Therefore, a stage is created when the shuffling of data takes place.
+	These stages can be either processed parallelly or sequentially depending upon the dependencies of these stages between each other. If there are two stages, Stage 0 and Stage 1, and if they are not sequentially dependent, they will be executed parallelly.
+	The sequential processing of RDDs in a single stage is called pipelining.
+	Use of reduceByKey() function shuffles the data in order to group the same keys. Since shuffling of data is taking place only once, our job will be divided into two stages as shown in the figure below.
+o	Two types of staging in Spark
+	ShuffleMapStage
+•	As the name suggests, it is a type of stage in the spark that produces data for shuffle operation.
+•	The output of this stage acts as an input for the other following stages.
+	ResultStage
+•	The final stage in a Job executes an action operation by running a function (example, the action operation can be collect, write, show, count) on an RDD.
+In-Memory processing
+	Use of node cache to store the data for quick access and transformations
+	This avoids the use of HDD to access the data repeatedly
+	This makes the entire process much faster
+Spilling
+	Data overflows from the cache as the cache can’t hold a lot of data being small in size itself
+
+Catalyst & Tungsten
+	Parser -> analyzer -> optimizer -> planner -> query execution
+	
+
+
+22 sep
+Spark Partitions
+
+	Each partition created in a Spark cluster is not allocated to individual worker
+	Spark follows a Driver-Executor architecture. A worker node is basically a system and it  contains a number of executors which in turn contain a number of slots, these slots hold the partition files
+	Default number of partitions is 200 in Spark with 128 MB blocks
+	Similar to Hadoop where the datanodes contain blocks of 128 MB each
+
+
+
+25 sep
+
+
+ 
+
+
+	Use of persist method to serialize the data
+	To manually unpersist, unpersist() method is used
+	In the latest Spark versions, the unpersist happens automatically
+	Least recently used algorithm
+	CPU time is higher as to read files the data has to be deserialized
+
+ 
+
+
+Write Operation in Spark
+	If write operation happens to a table where the db is it mentioned, then it gets saved in the default database
+	test = spark.sql(“describe extended emp_tbl”)
+	test.show()
+
+	the default type of this table is Managed table
+	managed by Databricks itself
+
+	managed table stores metadata and the actual data. Both are present in the Spark Environment itself
+	In External table, custom paths are given to store the actual data
+
+Managed table and external table
+	On deleting the managed table, the meta data and the actual data are deleted
+	On deleting the external table, the meta data is deleted but the actual data still exists as a custom path is provided to store the data
+
+26 sep
+
+Databricks
+Introduction
+	It is a managed service
+	It provides the backend resources for some service(s)
+	It provides a Spark Engine 
+	To execute something in Spark, a computing unit is provided
+	Azure provides the computing unit in this case
+	Hence the services we will be using is Azure Databricks
+
+Azure Databricks
+	All notebooks to be placed inside repo instead of workflows
+ 
+
+	Job
+o	To monitor actions
+	Compute
+o	To run a cluster, we need compute
+o	Multiple clusters can be created and used 
+	SQL Editor
+o	To write SQL codes
+	Queries
+	Dashboards
+	Alerts
+o	To create your own alerts
+	Query History
+	SQL Warehouse
+o	To run SQL queries
+	Job runs
+	Data Ingestion
+	Data live tools
+o	To work with live data
+	Experiments
+	Features
+
+
+Compute
+	All-purpose compute
+o	Click on create compute
+o	Performance:	runtime: 13.3 LTS (Long Term Support)
+o	Worker type: standard ds3 v2
+o	Min worker 2
+o	Max worker 8
+o	Driver type general purpose
+o	The disadvantage of an all-purpose cluster:
+	It must be running all the time
+	If an activity has to be run only for some time periodically, then it is a highly costly approach
+	
+
+
+
+	Job compute
+o	The cluster starts and terminates automatically
+o	It only runs during the scheduled times and not always unlike the all-purpose compute
+o	This makes it very cost effective for tasks that need to run at specific times
+
+	SQL Warehouse
+
+
+	Pools
+o	Starting a cluster takes time
+o	A cluster pool contains a series of clusters
+o	Each cluster has a number of VM’s allocated
+o	If a cluster is created in all-purpose compute, the VM’s are allocated from here
+o	This reduces the cluster start time and makes the computation faster
+
+To Do
+	Mount Storage Account to Databricks
+	Instead of reading data using paths and links which are complicated, the entire Storage Account can be mounted in Databricks to make the data imports easier
+	
+
+	Create a Azure Databricks account
+ 
+
+	Create and start an All-Purpose Compute Cluster
+ 
+
+	Create a storage account
+ 
+Create Key Vault
+ 
+
+dbutils.fs.mount(source = "wasbs://input@idaaccount.blob.core.windows.net",mount_point ="/mnt/input",extra_configs = {"fs.azure.account.key.idaaccount.blob.core.windows.net":dbutils.secrets.get(scope = "maniscope", key = "manisecret")})
+
+Mount the Storage Account
+
+ 
+
+ 
+
+Widgets
+
+	For parameterization
+	dbutils.widgets.text(“test”, “ida”)
+	dbutils.widgets.get(“test”)
+	dbutils.widgets.removeAll()
+	dbutils.widgets.dropdown(“choose_colors”, “white”, [“Red”, “black”, “blue”], “color_dropdown”)
+
+
+
+	instead of df.show(), use df.display() in Databricks
+	the default table provider in Databricks is Delta
+SQL Queries
+Utility Notebook
+Writing Data as a Table(Managed and External)
+
+Streaming
+	process used for writing is called write stream
+	process used for reading is called read stream
+
+***************************
+Structured Streaming
+**
+
+from pyspark.sql.types import *
+
+schema = StructType([StructField("lsoa_code", StringType(), True),\
+                         StructField("borough", StringType(), True),\
+                         StructField("major_category", StringType(), True),\
+                         StructField("minor_category", StringType(), True),\
+                         StructField("value", StringType(), True),\
+                         StructField("year", StringType(), True),\
+                         StructField("month", StringType(), True)])
+
+Streamdf = spark.readStream.schema(schema).option("header",True).csv("/mnt/input/droplocation")
+
+trimmedDF = Streamdf.select(
+                                      Streamdf.borough,
+                                      Streamdf.year,
+                                      Streamdf.month,
+                                      Streamdf.value
+                                      )\
+                             .withColumnRenamed(
+                                      "value",
+                                      "convictions"
+                                      )
+
+
+   query = trimmedDF.writeStream\
+                      .outputMode("append")\
+                      .format("csv") \
+                      .option("path", "/mnt/input/destination") \
+                      .option("checkpointLocation", "/mnt/input/checkpoint") \
+                      .start()\
+                      .awaitTermination()
+
+27th sep
+
+Databricks
+Introduction
+	It is a managed service
+	It provides the backend resources for some service(s)
+	It provides a Spark Engine 
+	To execute something in Spark, a computing unit is provided
+	Azure provides the computing unit in this case
+	Hence the services we will be using is Azure Databricks
+
+Azure Databricks
+	All notebooks to be placed inside repo instead of workflows
+ 
+
+	Job
+o	To monitor actions
+	Compute
+o	To run a cluster, we need compute
+o	Multiple clusters can be created and used 
+	SQL Editor
+o	To write SQL codes
+	Queries
+	Dashboards
+	Alerts
+o	To create your own alerts
+	Query History
+	SQL Warehouse
+o	To run SQL queries
+	Job runs
+	Data Ingestion
+	Data live tools
+o	To work with live data
+	Experiments
+	Features
+
+
+Compute
+	All-purpose compute
+o	Click on create compute
+o	Performance:	runtime: 13.3 LTS (Long Term Support)
+o	Worker type: standard ds3 v2
+o	Min worker 2
+o	Max worker 8
+o	Driver type general purpose
+o	The disadvantage of an all-purpose cluster:
+	It must be running all the time
+	If an activity has to be run only for some time periodically, then it is a highly costly approach
+	
+
+
+
+	Job compute
+o	The cluster starts and terminates automatically
+o	It only runs during the scheduled times and not always unlike the all-purpose compute
+o	This makes it very cost effective for tasks that need to run at specific times
+
+	SQL Warehouse
+
+
+	Pools
+o	Starting a cluster takes time
+o	A cluster pool contains a series of clusters
+o	Each cluster has a number of VM’s allocated
+o	If a cluster is created in all-purpose compute, the VM’s are allocated from here
+o	This reduces the cluster start time and makes the computation faster
+
+To Do
+	Mount Storage Account to Databricks
+	Instead of reading data using paths and links which are complicated, the entire Storage Account can be mounted in Databricks to make the data imports easier
+	
+
+	Create a Azure Databricks account
+ 
+
+	Create and start an All-Purpose Compute Cluster
+ 
+
+	Create a storage account
+ 
+Create Key Vault
+ 
+
+dbutils.fs.mount(source = "wasbs://input@idaaccount.blob.core.windows.net",mount_point ="/mnt/input",extra_configs = {"fs.azure.account.key.idaaccount.blob.core.windows.net":dbutils.secrets.get(scope = "maniscope", key = "manisecret")})
+
+Mount the Storage Account
+
+ 
+
+ 
+
+Widgets
+
+	For parameterization
+	dbutils.widgets.text(“test”, “ida”)
+	dbutils.widgets.get(“test”)
+	dbutils.widgets.removeAll()
+	dbutils.widgets.dropdown(“choose_colors”, “white”, [“Red”, “black”, “blue”], “color_dropdown”)
+
+
+
+	instead of df.show(), use df.display() in Databricks
+	the default table provider in Databricks is Delta
+SQL Queries
+Utility Notebook
+Writing Data as a Table(Managed and External)
+
+Streaming
+	process used for writing is called write stream
+	process used for reading is called read stream
+
+***************************
+Structured Streaming
+**
+
+from pyspark.sql.types import *
+
+schema = StructType([StructField("lsoa_code", StringType(), True),\
+                         StructField("borough", StringType(), True),\
+                         StructField("major_category", StringType(), True),\
+                         StructField("minor_category", StringType(), True),\
+                         StructField("value", StringType(), True),\
+                         StructField("year", StringType(), True),\
+                         StructField("month", StringType(), True)])
+
+Streamdf = spark.readStream.schema(schema).option("header",True).csv("/mnt/input/droplocation")
+
+trimmedDF = Streamdf.select(
+                                      Streamdf.borough,
+                                      Streamdf.year,
+                                      Streamdf.month,
+                                      Streamdf.value
+                                      )\
+                             .withColumnRenamed(
+                                      "value",
+                                      "convictions"
+                                      )
+
+
+   query = trimmedDF.writeStream\
+                      .outputMode("append")\
+                      .format("csv") \
+                      .option("path", "/mnt/input/destination") \
+                      .option("checkpointLocation", "/mnt/input/checkpoint") \
+                      .start()\
+                      .awaitTermination()
+
+28th sep
+
+DOCKER
+Docker vs Virtual Machines
+	To provide some S/W and H/W functionalities virtually, VMs are needed
+	VMs run on Hypervisor which are very costly
+	To run applications that do not require all the features of the VM, special containers can be used
+	This is where Docker comes into the picture
+	Docker uses libraries and runs images on the Docker Engine instead of a hypervisor without the use of complicated infrastructure
+
+Docker	Virtualization 
+It boots in a few seconds.	It takes a few minutes for VMs to boot.
+Pre-built docker containers are readily available.	Ready-made VMs are challenging to find.
+Docker has a complex usage mechanism consisting of both third-party and docker-managed tools.	Tools are easy to use and more straightforward to work with. third-party.
+Limited to Linux.	Can run a variety of guest OS.
+Dockers make use of the execution engine.	VMs make use of the hypervisor.
+It is lightweight.	It is heavyweight.
+Host OS can be different from container OS.	Host OS can be different from guest OS.
+Can run many docker containers on a laptop.	Cannot run more than a couple of VMS  on an average laptop.
+Docker can get a virtual network adapter. It can have separate IPs ad Ports. 	Each VMS gets its virtual network adapter.
+Sharing of files is possible.	Sharing library and files are not possible.
+Lacks security measures.	Security depends on the hypervisor.
+A container is portable.	VMS is dependent on a hypervisor.
+It allows running an application in an isolated environment known as a container 	It provides easiness in managing applications, recovery mechanisms, and isolation from the host operating system 
+
+
+Docker Commands:
+	To start docker:
+sudo systemctl start docker
+	To see if any applications running on docker
+sudo docker ps
+
+	Create 3 files: Dockerfile, requirement.txt, app.py
+	Add content to these files
+	Build docker app by going into the directory
+sudo docker build -t my-python-app .
+	Run Docker App
+sudo docker run my-python-app
+
+Advantage of Docker Images:
+	Makes testing operations easier
+	ACR is a repository that can store any type of image
+
+To install Azure CLI
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+Azure CLI login
+Az login
+
+	Azure Resource Group Login
+az group create --name RG_shell --location eastus
+
+	Azure acr(Azure Container Registry) creation
+az acr create --name idacrmani --resource-group RG_shell --location eastus --sku Standard
+
+**Note: my-python-app is the name of the image
+	Login to azure acr needs to be done
+sudo docker login idacrmani.azurecr.io
+	Image tagging to the acr needs to be done to create a connection before push
+sudo docker tag my-python-app idacrmani.azurecr.io/shellida:v1
+	Push of the image into acr
+sudo docker tag my-python-app idacrmani.azurecr.io/shellida:v1
+
+Final pushed image into docker acr can be seen below
+ 
+
+
+
+Kubernetes
+In Azure Portal, create a Kubernetes Cluster as shown below
+ 
+
+	Create a folder called Kubernetes in the VM
+	Add two yaml files:  deployment.yaml, and service.yaml
+	Add the content in the yaml files
+	Run the kube control(kubectl) command from inside the Kubernetes directory for deployment.yaml
+kubectl apply -f deployment.yaml
+	Run the kube control command from inside the Kubernetes directory for deployment.yaml
+kubectl apply -f service.yaml
+	attach the kuberneted cluster with the acr
+az aks get-credentials --resource-group RG_shell --name manikube
+az aks update -n manikube -g RG_shell --attach-acr idacrmani
+	Get the IP address of the Kubernetes cluster
+kubectl get svc my-python-app
+
+or 
+use the Azure Portal to connect the image to the Kubernetes Cluster
+	create a starter application
+	create a single image application
+	view application
+
+
+
+29th sep
+
+Azure DevOps
+
+Development Operations
+	Developing ETL pipelines, images, generating new data, data transformations, etc..
+	DevOps: union of people, process, and products
+	It helps in continuous integration and delivery
+ 
+
+ 
+
+Collaboration and Feature Branch
+	Take a copy of the code from the collaboration branch and create a new branch and name it accordingly
+	This creates a feature branch for individual developers
+	Each developer can make changes in their own feature branches
+	To commit the changes to the main branch(collaboration branch), they make a request which is verified by the admin
+	If the changes are valid and meet the requirement, they are committed to the main branch and going further everyone can see those changes  in it
+
+Epic, Feature, Story, Tasks, 
+
+Sprint 
+	Goal-oriented
+	Time-bounded
+	Sprint timespan – 2 to 4 weeks
+
+Example
+
+	Epic
+o	Create user authentication for a web application
+	Features
+o	Designing
+o	Authentication
+o	Verification
+o	Testing
+o	Production
+	User Story
+o	Home page
+o	Integration
+*Note: if tasks in a user story can’t be completed in the designated sprint, they are moved to backlog
+
+
+Organization settings
+	Overview, projects, users, billing, global notification, usage, extensions, Azure Active Directory
+	Click on billing -> set up billing -> upon validating the subscription -> save -> change the MS Hosted CI/CD to 1 -> save
+
+Inside the project
+	Wiki 
+o	About the project
+o	All the project related documents to be placed under wiki
+
+
+Add Priorities
+	1, 2, 3, 4
+	Low -> High
+
+Risk
+	1- High
+	2- Medium
+	3- High
+
+Effort
+	How long it is going to take
+	10 – meaning 10 hours
+
+Acceptance Criteria
+	Description about the foremost requirements that are absolutely needed from the developer
+	Only once the acceptance criteria is completed can the user story be considered closed
+	The user story is present for every user story
+
+Repository
+	Project -> Repos -> Files -> Repository_Name
+	Inside the repo, create a config.json file
+	It is not necessary to get the code from the main branch
+	Any other feature branch can be used to get the data if needed
+
+
+
+	Create a new repo
+	In the main repo, add a config.json file
+	Create a feature branch pointing to the main branch
+	Make some changes to the file present in the feature branch
+	Create a pull request
+	Approve the request
+	Revert the operation by going to the pull requests option
+
+Pipeline
+	Scenario:
+o	Main branch is present
+o	To work on the code changes, a feature branch is also present
+o	Upon making changes, pull request is done
+o	The main branch is updated using merge
+o	To automate the process of continuous deployment, a pipeline is created
+o	The continuous deployment ensures that the testing process happens with integration
+
+	Inside the pipeline
+ 
+
+o	The trigger suggests that when any changes are made in the main branch, the pipeline should start running
+o	Create the pipeline with the Flask project in GitHub and then save and run
+o	Python Flask 3.7 application is running 
+ 
+
+Case Study
+	Only 2 days
+	Second day second half, presentation
+	Each and every team, one  case study
+	Project 1: Alternative Fuel
+	Reimbursement 
+
+
